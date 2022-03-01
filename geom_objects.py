@@ -1,7 +1,15 @@
+from math import atan2
+
 class Dot:
     def __init__(self, coords):
         self.x = coords[0]
         self.y = coords[1]
+
+    def __repr__(self):
+            return f"({self.x}, {self.y})"
+
+    def __gt__(self, other):
+        return atan2(-self.y, -self.x) > atan2(-other.y, -other.x)
 
 
 class Line:
@@ -28,6 +36,8 @@ class Vector:
 
 class Angle:
     def __init__(self, A, B, C):
+        self.A = A
+        self.C = C
         self.top = B
         self.BA = Vector(B, A)
         self.BC = Vector(B, C)
@@ -42,6 +52,9 @@ class Angle:
 
 class Triangle:
     def __init__(self, A, B, C):
+        self.A = A
+        self.C = C
+        self.B = B
         self.ABC = Angle(A, B, C)
         self.BAC = Angle(B, A, C)
         self.BCA = Angle(B, C, A)
@@ -51,18 +64,31 @@ class Triangle:
 
 
 class Polygon:
-    def __init__(self):
-        self.dots = set()
 
-    def normalize(self):  #преобразование множества точек в список (упорядочивание точек)
-        return []
+    def __init__(self, dots=[]):
+        self.dots = dots
+
+    def findCenter(self):
+        cx, cy = 0, 0
+        for dot in self.dots:
+            cx += dot.x
+            cy += dot.y
+        cx //= len(self.dots)
+        cy //= len(self.dots)
+        return Dot((cx, cy))
+
+    def normalize(self):
+        C = self.findCenter()
+        dots1 = [Dot((dot.x - C.x, dot.y - C.y)) for dot in self.dots]
+        dots1.sort()
+        self.dots = [Dot((dot.x + C.x, dot.y + C.y)) for dot in dots1]
 
     def area(self):
-        dots = self.normalize()
-        n = len(dots)
-        s = (dots[n - 1].x + dots[0].x) * (dots[n - 1].y - dots[0].y)
+        self.normalize()
+        n = len(self.dots)
+        s = (self.dots[n - 1].x + self.dots[0].x) * (self.dots[n - 1].y - self.dots[0].y)
         for i in range(n - 1):
-            s += (dots[i].x + dots[i + 1].x) * (dots[i].y - dots[i + 1].y)
+            s += (self.dots[i].x + self.dots[i + 1].x) * (self.dots[i].y - self.dots[i + 1].y)
         return abs(s) / 2
 
 
