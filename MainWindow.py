@@ -38,6 +38,7 @@ class MainWindow(QMainWindow):
         self.coordALE.setText("")
         self.coordBLE.setText("")
         self.coordCLE.setText("")
+        self.ansLBL.setText("Искомая площадь равна: не вычислено")
         self.update_buttons()
         self.update()
 
@@ -59,7 +60,7 @@ class MainWindow(QMainWindow):
         if not polygons:
             polygons.append(0)
         polygons[0] = solve()
-        print(polygons[0].area())
+        self.ansLBL.setText(f"Искомая площадь равна: {polygons[0].area()}")
         self.update()
 
     def cancel_click(self):
@@ -189,7 +190,7 @@ class MainWindow(QMainWindow):
     def paintPolygon(self, qp):
         if not polygons:
             return
-        pen = QPen(Qt.green, 2)
+        pen = QPen(Qt.black, 2)
         brush = QBrush(Qt.magenta)
         qp.setPen(pen)
         qp.setBrush(brush)
