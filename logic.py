@@ -41,6 +41,7 @@ def add_dot(dot):
             mode["triangle"] = False
         current_dots.clear()
 
+
 def clear_data():
     polygons.clear()
     angles.clear()
@@ -51,7 +52,18 @@ def clear_data():
 
 
 def solve():
-    ans = Polygon([Dot((0, 0)),  Dot((50, 0)),
+    ansP, maxS = None, 0
+    for triangle in triangles:
+        for angle in angles:
+            p = findPolygon(triangle, angle)
+            S = p.area()
+            if S > maxS:
+                ansP, maxS = p, S
+    return ansP
+
+
+def findPolygon(triange, angle):
+    ans = Polygon([Dot((0, 0)), Dot((50, 0)),
                    Dot((0, 30)), Dot((50, 30)),
                    Dot((25, 50))])
     return ans

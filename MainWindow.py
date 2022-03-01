@@ -57,9 +57,16 @@ class MainWindow(QMainWindow):
         self.update()
 
     def solve_click(self):
+        p = solve()
+        if p is None:
+            msgBox = QMessageBox()
+            msgBox.setIcon(QMessageBox.Information)
+            msgBox.setText("Отсутствуют пересечения углов и треугольников")
+            msgBox.exec()
+            return
         if not polygons:
             polygons.append(0)
-        polygons[0] = solve()
+        polygons[0] = p
         self.ansLBL.setText(f"Искомая площадь равна: {polygons[0].area()}")
         self.update()
 
@@ -86,10 +93,10 @@ class MainWindow(QMainWindow):
         except Exception:
             msgBox = QMessageBox()
             msgBox.setIcon(QMessageBox.Information)
-            msgBox.setText("Неверный формат ввода. Проверьте корректность заполнения полей. Так же ваши координаты не должны быть слишком большими!")
+            msgBox.setText(
+                "Неверный формат ввода. Проверьте корректность заполнения полей. Так же ваши координаты не должны быть слишком большими!")
             msgBox.setWindowTitle("Что-то не так с вашими данными((")
             msgBox.exec()
-
 
     def update_buttons(self):
         vidgets = [self.addAngleBtn, self.addTriangleBtn, self.loadBtn, self.solveBtn,
@@ -104,10 +111,8 @@ class MainWindow(QMainWindow):
             for vidget in vidgets:
                 vidget.setEnabled(True)
 
-
     def dot_in_field(self, x, y):
         return 250 <= x <= 1050 and 20 <= y <= 640
-
 
     def mousePressEvent(self, event):
         if not (mode["triangle"] or mode["angle"]):
@@ -118,7 +123,7 @@ class MainWindow(QMainWindow):
             self.update()
             self.update_buttons()
 
-#################   Painting   #################
+    #################   Painting   #################
 
     def paintEvent(self, ev):
         qp = QPainter(self)

@@ -7,7 +7,7 @@ class Dot:
         self.y = coords[1]
 
     def __repr__(self):
-            return f"({self.x}, {self.y})"
+        return f"({self.x}, {self.y})"
 
     def __gt__(self, other):
         return atan2(-self.y, -self.x) > atan2(-other.y, -other.x)
@@ -94,5 +94,3 @@ class Polygon:
         for i in range(n - 1):
             s += (self.dots[i].x + self.dots[i + 1].x) * (self.dots[i].y - self.dots[i + 1].y)
         return abs(s) / 2
-
-
