@@ -52,6 +52,8 @@ def clear_data():
 
 
 def solve():
+    print(angles)
+    print(triangles)
     ansP, maxS = None, 0
     for triangle in triangles:
         for angle in angles:
@@ -63,7 +65,20 @@ def solve():
 
 
 def findPolygon(triange, angle):
-    ans = Polygon([Dot((0, 0)), Dot((50, 0)),
-                   Dot((0, 30)), Dot((50, 30)),
-                   Dot((25, 50))])
+    # ans = Polygon([Dot((0, 0)), Dot((50, 0)),
+    #                Dot((0, 30)), Dot((50, 30)),
+    #                Dot((25, 50))])
+    ans = Polygon([])
+    # add simple dots
+    if angle.check_dot(triange.A):
+        ans.dots.append(triange.A)
+    if angle.check_dot(triange.B):
+        ans.dots.append(triange.B)
+    if angle.check_dot(triange.C):
+        ans.dots.append(triange.C)
+    if triange.check_dot(angle.B):
+        ans.dots.append(angle.B)
+    # add intersections
+    for section in triange.sections:
+        ans.dots.extend(section.intersection(angle))
     return ans

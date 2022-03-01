@@ -159,10 +159,10 @@ class MainWindow(QMainWindow):
         qp.setBrush(brush)
         for tr in angles:
             self.paintDot(qp, tr.A)
-            self.paintDot(qp, tr.top)
+            self.paintDot(qp, tr.B)
             self.paintDot(qp, tr.C)
-            self.paintLine(qp, tr.top, tr.A)
-            self.paintLine(qp, tr.top, tr.C)
+            self.paintLine(qp, tr.B, tr.A)
+            self.paintLine(qp, tr.B, tr.C)
 
     def paintTriangles(self, qp):
         pen = QPen(Qt.red, 2)
@@ -188,7 +188,7 @@ class MainWindow(QMainWindow):
     def convertP2P(self, polygon):
         ans = QPolygon()
         for dot in polygon.dots:
-            p = QPoint(650 + dot.x, 330 - dot.y)
+            p = QPoint(650 + int(dot.x), 330 - int(dot.y))
             ans.append(p)
         return ans
 
