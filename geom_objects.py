@@ -1,5 +1,6 @@
 from math import atan2
 
+
 class Dot:
     def __init__(self, coords):
         self.x = coords[0]
@@ -29,6 +30,9 @@ class Vector:
 
     def abs(self):
         return (self.x ** 2 + self.y ** 2) ** 0.5
+
+    def __repr__(self):
+        return f"Vector({self.x}, {self.y})"
 
     def cos(self, other):
         return self.scalar_mult(other) / (self.abs() * other.abs())
