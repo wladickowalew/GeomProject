@@ -9,6 +9,7 @@ mode = {
 }
 current_dots = []
 polygons = []
+#lineUp = Line()
 
 
 def load_from_file(file_name):
@@ -62,6 +63,18 @@ def solve():
             if S > maxS:
                 ansP, maxS = p, S
     return ansP
+
+
+def dot_in_fild(dot):
+    return -400 <= dot.x <= 400 and -310 <= dot.y <= 310
+
+
+def intersection_with_border(angle, dot, vector):
+    line = Line(angle.B, dot)
+    for border in BORDERS:
+        t = line.intersection(border)
+        if dot_in_fild(t) and Vector(angle.B, t).kolleniar(vector):
+            return t
 
 
 def findPolygon(triange, angle):

@@ -145,6 +145,10 @@ class MainWindow(QMainWindow):
         qp.drawLine(250, 330, 1050, 330)
         qp.drawLine(1050, 330, 1045, 335)
         qp.drawLine(1050, 330, 1045, 325)
+        # self.paintLine(qp, TOP_LEFT, TOP_RIGHT)
+        # self.paintLine(qp, BOTTOM_LEFT, BOTTOM_RIGHT)
+        # self.paintLine(qp, TOP_LEFT, BOTTOM_LEFT)
+        # self.paintLine(qp, TOP_RIGHT, BOTTOM_RIGHT)
 
     def paintDot(self, qp, dot):
         qp.drawEllipse(int(650 + dot.x - 2), int(330 - dot.y - 2), 4, 4)
@@ -161,8 +165,8 @@ class MainWindow(QMainWindow):
             self.paintDot(qp, tr.A)
             self.paintDot(qp, tr.B)
             self.paintDot(qp, tr.C)
-            self.paintLine(qp, tr.B, tr.A)
-            self.paintLine(qp, tr.B, tr.C)
+            self.paintLine(qp, tr.B, intersection_with_border(tr, tr.A, tr.BA))
+            self.paintLine(qp, tr.B, intersection_with_border(tr, tr.C, tr.BC))
 
     def paintTriangles(self, qp):
         pen = QPen(Qt.red, 2)

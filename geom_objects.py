@@ -1,6 +1,5 @@
 from math import atan2
 
-
 class Dot:
     def __init__(self, coords):
         self.x = coords[0]
@@ -48,9 +47,6 @@ class Section:
             if vec.kolleniar(angle.BC):
                 ans.append(d)
         return ans
-
-
-
 
 
 class Vector:
@@ -136,3 +132,15 @@ class Polygon:
         for i in range(n - 1):
             s += (self.dots[i].x + self.dots[i + 1].x) * (self.dots[i].y - self.dots[i + 1].y)
         return abs(s) / 2
+
+#  Borders
+TOP_LEFT = Dot((-400, 310))
+TOP_RIGHT = Dot((400, 310))
+BOTTOM_LEFT = Dot((-400, -310))
+BOTTOM_RIGHT = Dot((400, -310))
+
+TOP_BORDER = Line(TOP_LEFT, TOP_RIGHT)
+BOTTOM_BORDER = Line(BOTTOM_LEFT, BOTTOM_RIGHT)
+RIGHT_BORDER = Line(TOP_RIGHT, BOTTOM_RIGHT)
+LEFT_BORDER = Line(TOP_LEFT, BOTTOM_LEFT)
+BORDERS = [TOP_BORDER, BOTTOM_BORDER, LEFT_BORDER, RIGHT_BORDER]
